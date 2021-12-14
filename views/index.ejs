@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <title>Home</title>
+  </head>
+  <body style="background-color: #F78536;">
+
+    <nav class="p-5" style="background-color: whitesmoke;">
+
+      <!-- <div class="col-md-2">
+        <img src="../images/logo.png" class="object-fit container" style="height: 103%; width: 43%;">
+      </div> -->
+
+      <!-- <div class="col-md-10">
+
+        <ul class="nav justify-content-end">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#" style="color: #F78536 !important; font-size: larger;">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" style="color: gray !important; font-size: larger;">Booking</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#" style="color: gray !important; font-size: larger;">Link</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" style="color: gray !important; font-size: larger;">Link</a>
+          </li>
+        </ul>
+
+      </div> -->
+    </nav>
+
+    <section style="background-color: whitesmoke; width: 80%;border-radius: 7px; height: 100%; margin-top: 8% !important;" class=" m-auto">
+      <div class="row p-2">
+
+        <div class="col-md-6 text-center">
+          <img src="../images/dd.jpg" style="border-radius: 7px; object-fit: contain;">
+        </div>
+
+        <div class="p-5 col-md-6">
+         <!-- Tab panes -->
+          <div class="tab-content">
+           <div class="mt-4 p-4 " style="background-color: whitesmoke; border-radius: 7px;">
+
+            <!-- <div class="row d-flex justify-content-around mt-2">
+
+              <div class="col-md-6">
+                <div class="input-field">
+                  <label for="from" style="color: #F78536; font-weight: bold;">From:</label>
+                  <select class="form-select">
+
+                    <% if (data.length > 0 ) {%>
+                      <option value="" disabled selected>Choose a city</option>
+                      <% data.forEach(res => { %>
+
+                        <option value="<%= res.from_city %>"><%= res.from_city %></option>
+
+                        <% }) %>
+                    <% } else {%>
+                      <h3>there's no city yet!</h3>
+                    <% } %>
+                  </select>
+                </div> 
+              </div>
+
+              <div class="col-md-6">
+                  <label for="from" style="color: #F78536; font-weight: bold;">To:</label>
+                  <select class="form-select">
+
+                    <% if (data.length > 0 ) {%>
+                      <option value="" disabled selected>Choose a city</option>
+                      <% data.forEach(res => { %>
+
+                        <option value="<%= res.to_city %>"><%= res.to_city %></option>
+
+                        <% }) %>
+                    <% } else {%>
+                      <h3>there's no city yet!</h3>
+                    <% } %>
+
+                  </select>
+              </div>
+
+            </div> -->
+
+            <div class="d-flex justify-content-around mt-2">
+
+              <!-- <div class="col-md-12 ">
+                <div class="input-field">
+                  <label for="date-start" style="color: #F78536; font-weight: bold;">Flight time:</label>
+                  <select class="form-select" style="width: 100%;">
+                    
+                    <% if (data.length > 0 ) {%>
+                      <option value="" disabled selected>Choose a time</option>
+                      <% data.forEach(res => { %>
+
+                        <option value="<%= res.flight_time %>"><%= res.flight_time %></option>
+
+                        <% }) %>
+                    <% } else {%>
+                      <h3>there's no city yet!</h3>
+                    <% } %>
+
+                  </select>
+                </div>
+              </div> -->
+
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                      <th style="text-align: center; vertical-align: middle;">Flight ID</th>
+                      <th style="text-align: center; vertical-align: middle;">From city</th>
+                      <th style="text-align: center; vertical-align: middle;">To city</th>
+                      <th style="text-align: center; vertical-align: middle;">Places</th>
+                      <th style="text-align: center; vertical-align: middle;">Flight Date</th>
+                      <th style="text-align: center; vertical-align: middle;">Flight Time</th>
+                      <th style="text-align: center; vertical-align: middle;">Action</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <% if (data.length > 0 ) {%>
+
+                      <% data.forEach(res => { %>
+                      <tr>
+                          <td style="text-align: center; vertical-align: middle;"><%= res.id %></td>
+                          <td style="text-align: center; vertical-align: middle;"><%= res.from_city %></td>
+                          <td style="text-align: center; vertical-align: middle;"><%= res.to_city %></td>
+                          <td style="text-align: center; vertical-align: middle;"><%= res.places %></td>
+                          <td style="text-align: center; vertical-align: middle;"><%= res.flight_date.toLocaleDateString() %></td>
+                          <td style="text-align: center; vertical-align: middle;"><%= res.flight_time %></td>
+                          <td style="text-align: center; vertical-align: middle;">
+                              <a href="/booking/<%= res.id %>" class="btn btn-outline-dark">Book</a>
+                          </td>
+                          
+                      </tr>
+                      <% }) %>
+
+                  <%} else {%>
+                      <h2>No flights programmed</h2>
+                  <% } %>
+                </tbody>
+
+              </table>
+              
+            <!-- </div>
+
+              <div class="col-xs-12 text-center mt-2">
+                <input type="submit" class="btn btn-outline-dark" value="Book">
+              </div>
+           </div> -->
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  </body>
+</html>
