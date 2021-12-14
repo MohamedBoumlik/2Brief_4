@@ -79,28 +79,32 @@
                         <table class="table bg-white rounded shadow-sm  table-hover">
                             <thead>
                                 <tr>
-                                    <th style="text-align: center; vertical-align: middle;">ID</th>
-                                    <th style="text-align: center; vertical-align: middle;">Client ID</th>
-                                    <th style="text-align: center; vertical-align: middle;">From city</th>
-                                    <th style="text-align: center; vertical-align: middle;">To city</th>
+                                    <!-- <th style="text-align: center; vertical-align: middle;">ID</th> -->
+                                    <th style="text-align: center; vertical-align: middle;">Client Name</th>
+                                    <th style="text-align: center; vertical-align: middle;">Client Phone</th>
+                                    <th style="text-align: center; vertical-align: middle;">From City</th>
+                                    <th style="text-align: center; vertical-align: middle;">To City</th>
+                                    <th style="text-align: center; vertical-align: middle;">Places</th>
                                     <th style="text-align: center; vertical-align: middle;">Flight Date</th>
                                     <th style="text-align: center; vertical-align: middle;">Flight time</th>
                                     <th style="text-align: center; vertical-align: middle;">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <% if (results.length > 0 ) {%>
+                                <% if (result.length > 0 ) {%>
 
-                                    <% results.forEach(res => { %>
+                                    <% result.forEach(res => { %>
                                     <tr>
-                                        <td style="text-align: center; vertical-align: middle;"><%= res.id %></td>
+                                        <!-- <td style="text-align: center; vertical-align: middle;"><%= res.id %></td> -->
+                                        <td style="text-align: center; vertical-align: middle;"><%= res.client_fName %></td>
+                                        <td style="text-align: center; vertical-align: middle;"><%= res.tel %></td>
                                         <td style="text-align: center; vertical-align: middle;"><%= res.from_city %></td>
                                         <td style="text-align: center; vertical-align: middle;"><%= res.to_city %></td>
                                         <td style="text-align: center; vertical-align: middle;"><%= res.places %></td>
-                                        <td style="text-align: center; vertical-align: middle;"><%= res.flight_date %></td>
+                                        <td style="text-align: center; vertical-align: middle;"><%= res.flight_date.toLocaleDateString() %></td>
                                         <td style="text-align: center; vertical-align: middle;"><%= res.flight_time %></td>
                                         <td style="text-align: center; vertical-align: middle;">
-                                            <button class="btn btn-outline-danger">Delete</button>
+                                            <form action="/deleteBook/<%= res.id %>" method="post" > <button class="btn btn-outline-danger">Delete</button> </form> 
                                         </td>
                                         
                                     </tr>

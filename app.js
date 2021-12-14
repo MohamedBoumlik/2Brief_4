@@ -42,7 +42,7 @@ app.use(express.static('public'));
 
 // index page
 app.get('/',(req,res) => {
-    let sql = 'SELECT * FROM vol';
+    let sql = 'SELECT * FROM vol WHERE vol.places<= 20';
     conn.query(sql,(err,data) => {
         if(err) throw err;
         res.render('index',{data});
@@ -122,6 +122,26 @@ app.post('/deleteFlight/:id', (req,res) => {
     })
 });
 
+// booked
+app.get('/book', (req,res) => {
+    // let sql = 'SELECT * FROM reservation' ;
+    let volSql = 'SELECT reservation.id ,vol.from_city, vol.to_city, vol.flight_time, vol.flight_date, vol.places ,reservation.client_fName,reservation.tel FROM reservation, vol WHERE vol.id=reservation.vol_id';
+    conn.query(volSql, (err,result) => {
+        if(err) throw err;
+        res.render('book',{result});
+    });
+});
+
+// delete book
+app.post('/deleteBook/:id', (req,res) => {
+    // console.log(req.params.id);
+    let sql = 'DELETE FROM reservation WHERE id = ?';
+    conn.query(sql, [req.params.id],(err) => {
+        if(err) throw err;
+        console.log('book deleted successfully');
+        res.redirect('/book');
+    })
+});
 // 404
 app.use((req,res) => {
     res.render('404');
