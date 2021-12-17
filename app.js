@@ -2,15 +2,16 @@ const {render} = require('ejs');
 const express = require('express');
 const app = express();
 const bodyparser = require('body-parser');
-
-
+const nodemailer = require('nodemailer');
+const ejs = require('ejs');
+const fs = require('fs')
 app.set('view engine','ejs');
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended: true}));
 
-
 // connection with DB
 const mysql = require('mysql2');
+// const { dirname } = require('path');
 
 const conn = mysql.createConnection({
     host : 'localhost',
@@ -72,7 +73,43 @@ app.post('/saveReserv',(req,res) => {
     conn.query(sql, {client_fName: name, email: email, tel: tel, vol_id: fId}, (err) => {
         if(err) throw err ;
         console.log('Reserved successfully');
-        res.redirect('/');
+        res.redirect('/ticket');
+    });
+
+});
+
+// mail
+app.get('/ticket', (req,res) => {
+
+    let sql = 'SELECT reservation.id ,vol.from_city, vol.to_city, vol.flight_time, vol.flight_date, vol.places ,reservation.client_fName,reservation.tel FROM reservation, vol WHERE vol.id=reservation.vol_id AND reservation.id=(select max(id) from reservation)';
+    
+    conn.query(sql,(err,data) => {
+        if(err) throw err;
+        res.render('ticket',{data});
+        let transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'testcoding975@gmail.com',
+                pass: 'testCoding1998'
+            }
+        });
+        
+        let mailOptions = {
+    
+            from: 'testcoding975@gmail.com', // TODO: email sender
+            to: 'boumlik.mohamed.19@gmail.com', // TODO: email receiver
+            subject: 'Booking Ticket',
+            // text: 'ur ticket'
+            // html: `hello ${data[0].client_fName}`
+            // html:  ejs.render('ticket',{data})
+            html:  ejs.render(fs.readFileSync('../2Brief_4/views/ticket.ejs','utf8'),{data})
+        }
+    
+        transporter.sendMail(mailOptions, (err, data) => {
+            if (err) throw err;
+            
+        });
+        // console.log(data);
     });
 
 });
@@ -142,6 +179,7 @@ app.post('/deleteBook/:id', (req,res) => {
         res.redirect('/book');
     })
 });
+
 // 404
 app.use((req,res) => {
     res.render('404');
